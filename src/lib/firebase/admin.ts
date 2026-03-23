@@ -1,16 +1,10 @@
 import * as admin from "firebase-admin";
+import serviceAccount from "../../../math-mate-d6532-firebase-adminsdk-fbsvc-45b3461299.json";
 
 if (!admin.apps.length) {
   try {
     admin.initializeApp({
-      credential: admin.credential.cert({
-        projectId: process.env.FIREBASE_PROJECT_ID,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        // Replace escaped newlines from environment variable back to literal newlines
-        // Replace escaped newlines and ensure no wrapping quotes
-        privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n").replace(/^"(.*)"$/, "$1"),
-
-      }),
+      credential: admin.credential.cert(serviceAccount as any),
       storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
     });
   } catch (error) {
